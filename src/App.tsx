@@ -9,6 +9,10 @@ import { getYoutubeData } from './scripts/youtube';
 import { getVimeoData } from './scripts/vimeo';
 
 import './App.css';
+import { isRegExp } from 'util/types';
+
+import { getVideoIdAndProvider } from './scripts/getVideoIdAndProvider';
+import { VideoProvider } from './interfaces/video-provider';
 
 const App: FC = () => {
   const [videoUrl, setVideoUrl] = useState<string>('');
@@ -46,11 +50,29 @@ const App: FC = () => {
   };
 
   const searchVimeoData = async (): Promise<void> => {
-    const regex = videoUrl.split(/vimeo.*?([0-9]+$)/gi);
-    setVideoId(regex[1] !== undefined ? regex[1] : regex[0]);
-    const data: VimeoResponse = await getVimeoData(regex[1]);
+    const prov: VideoProvider | null = getVideoIdAndProvider(videoUrl);
+    console.log(prov);
 
-    setImgUrl(data.pictures.sizes[2].link);
+    // const a= videoUrl.match(/http:\/\/(:?www.)?(\w*)/)[2];
+    // if (a =="youtube")
+    //  {
+    //         // do stuff
+    //  }
+    // else if (a =="vimeo")
+    //  {
+    //          // do stuff
+    //  }
+    //  else
+    //  {
+    //         // Not a valid url
+    //  }
+
+    // const regex = videoUrl.split(/vimeo.*?([0-9]+$)/gi);
+
+    // setVideoId(regex[1] !== undefined ? regex[1] : regex[0]);
+    // const data: VimeoResponse = await getVimeoData(regex[1]);
+
+    // setImgUrl(data.pictures.sizes[2].link);
   };
 
   return (
