@@ -2,12 +2,17 @@ export interface VimeoResponse {
   name: string;
   release_time: string;
   stats: Stats;
-  connections: Connections;
+  metadata: Metadata;
   pictures: Pictures;
+  link: string
 }
 
 interface Stats {
   plays: number;
+}
+
+interface Metadata {
+  connections: Connections
 }
 
 interface Connections {

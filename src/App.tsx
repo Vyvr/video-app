@@ -2,32 +2,29 @@ import { FC, useState, ChangeEvent, useEffect } from 'react';
 import { Button, Input } from 'reactstrap';
 import Header from './components/header/header';
 
-import { YouTubeResponse } from './interfaces/responses/youtube-video.response';
-import { VimeoResponse } from './interfaces/responses/vimeo-video.response';
+import { VideoData } from './interfaces/video-data';
 
-import { getYoutubeData } from './scripts/youtube';
-import { getVimeoData } from './scripts/vimeo';
+import { getVideoData } from './scripts/getVideoData';
 
 import './App.css';
-import { isRegExp } from 'util/types';
 
-import { getVideoIdAndProvider } from './scripts/getVideoIdAndProvider';
-import { VideoRequestData } from './interfaces/video-request-data';
-import { VideoData } from './interfaces/video-data';
 
 const App: FC = () => {
   const [videoUrl, setVideoUrl] = useState<string>('');
-  const [videoId, setVideoId] = useState<string>('');
   const [videoData, setVideoData] = useState<VideoData>();
   const [imgUrl, setImgUrl] = useState<string>('');
-  const [searchYoutubeDataTrigger, setSearchYoutubeDataTrigger] =
-    useState<boolean>(false);
+  const [searchVideoDataTrigger, setSearchVideoDataTrigger] = useState<boolean>(false);
+
 
   const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     setVideoUrl(event.target.value);
   };
 
-  const searchVideoData = async (): Promise<void> => {};
+  const searchVideoData = async (): Promise<void> => {
+    const data = getVideoData(videoUrl);
+    console.log(data);
+    
+  };
 
   return (
     <div className="App">
@@ -42,7 +39,8 @@ const App: FC = () => {
         <Button
           color="primary"
           onClick={() =>
-            setSearchYoutubeDataTrigger(!searchYoutubeDataTrigger)
+            // setSearchVideoDataTrigger(!searchVideoDataTrigger)
+            searchVideoData()
           }
         >
           Search for video

@@ -4,6 +4,7 @@ export interface VideoData {
   viewCount: string;
   thumbnail: Thumbnail;
   addDate?: Date;
+  url: string;
 }
 
 interface Thumbnail {
