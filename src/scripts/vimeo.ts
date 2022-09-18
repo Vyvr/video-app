@@ -31,6 +31,7 @@ export const getVimeoData = async (videoId: string): Promise<VideoData | null> =
     .then((res: VimeoResponse) => {
       if (!!res) {
         return {
+          id: videoId,
           name: res.name,
           likes: res.metadata.connections.likes.total.toString(),
           viewCount: res.stats.plays.toString(),
