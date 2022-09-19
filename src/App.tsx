@@ -7,32 +7,22 @@ import { VideoData } from './interfaces/video-data';
 
 import { getVideoData } from './scripts/getVideoData';
 
-import { exampleVideos } from './example-videos';
-
-import './App.css';
 import { loadExampleData } from './scripts/loadExampleData';
-import {
-  getYoutubeData,
-  getYoutubeDataRXJS,
-} from './scripts/youtube';
-import { getVimeoData, getVimeoDataRXJS } from './scripts/vimeo';
+import './App.css';
+
 
 const App: FC = () => {
   const [videoUrl, setVideoUrl] = useState<string>('');
   const [data, setData] = useState<VideoData[]>([]);
-  const [addVideoTrigger, setAddVideoTrigger] =
-    useState<boolean>(false);
 
   useEffect(() => {
     for (const key in localStorage) {
       const item: string | null = localStorage.getItem(key);
-      if (item) {
-        const itemObj: VideoData = JSON.parse(item);
-        if (data.includes(itemObj))
-          setData((data) => [...data, itemObj]);
-      }
+      if (!!!item) return;
+      const itemObj: VideoData = JSON.parse(item);
+      setData((data) => [...data, itemObj]);
     }
-  }, [addVideoTrigger]);
+  }, []);
 
   const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) => {
     setVideoUrl(event.target.value);
@@ -40,12 +30,12 @@ const App: FC = () => {
 
   const addNewVideo = async () => {
     await getVideoData(videoUrl).then((d) => {
-      if (!!d) {
-        setData((data) => [...data, d]);
-        localStorage.setItem(d.id, JSON.stringify(d));
-      }
+      if (!!!d) return;
+      const dataFromStorage: string | null = localStorage.getItem(d.id);
+        if (!!dataFromStorage) return;
+      setData((data) => [...data, d]);
+      localStorage.setItem(d.id, JSON.stringify(d));
     });
-    setAddVideoTrigger(!addVideoTrigger);
   };
 
   const loadDefaultData = async () => {
@@ -53,11 +43,6 @@ const App: FC = () => {
   };
 
   const showData = () => {
-    // for (const key in localStorage) {
-    //   const item: string | null = localStorage.getItem(key);
-    //   if (item) console.log(JSON.parse(item));
-    // }
-    // console.log(JSON.parse({...localStorage}));
     console.log(data);
   };
 
