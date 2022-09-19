@@ -1,5 +1,6 @@
 #video-container {
     display: grid;
     grid-template-columns: repeat(3, 300px);
-    grid-template-rows: repeat(5, 160px)
+    grid-template-rows: repeat(5, 250px);
+    grid-gap: 20px;
 }

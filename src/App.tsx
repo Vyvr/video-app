@@ -2,6 +2,7 @@ import { FC, useState, ChangeEvent, useEffect } from 'react';
 import { Button, Input } from 'reactstrap';
 import Header from './components/header/header';
 import VideoGrid from './components/videoGrid/videoGrid';
+import GridChild from './components/videoGrid/gridChild';
 
 import { VideoData } from './interfaces/video-data';
 
@@ -9,7 +10,6 @@ import { getVideoData } from './scripts/getVideoData';
 
 import { loadExampleData } from './scripts/loadExampleData';
 import './App.css';
-
 
 const App: FC = () => {
   const [videoUrl, setVideoUrl] = useState<string>('');
@@ -31,8 +31,10 @@ const App: FC = () => {
   const addNewVideo = async () => {
     await getVideoData(videoUrl).then((d) => {
       if (!!!d) return;
-      const dataFromStorage: string | null = localStorage.getItem(d.id);
-        if (!!dataFromStorage) return;
+      const dataFromStorage: string | null = localStorage.getItem(
+        d.id
+      );
+      if (!!dataFromStorage) return;
       setData((data) => [...data, d]);
       localStorage.setItem(d.id, JSON.stringify(d));
     });
@@ -67,7 +69,23 @@ const App: FC = () => {
         </Button>
       </Header>
 
-      {/* <VideoGrid></VideoGrid> */}
+      <VideoGrid>
+        {data &&
+          data.map((d) => {
+            return (
+              <GridChild
+                favourite={false}
+                key={d.id}
+                viewCount={d.viewCount}
+                likeCount={d.likes}
+                addDate={'19.09.2022'}
+                thumbnailId={d.id}
+                thumbnailUrl={d.thumbnail.url}
+                title={d.name}
+              />
+            );
+          })}
+      </VideoGrid>
     </div>
   );
 };

@@ -7,7 +7,11 @@ interface VideoGridProps {
 }
 
 const VideoGrid: FC<VideoGridProps> = (props) => {
-  return <div id="video-container"></div>;
+  return (
+    <div id="video-container">
+      {props.children}
+    </div>
+  );
 };
 
 export default VideoGrid;
