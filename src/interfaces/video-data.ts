@@ -1,11 +1,12 @@
 export interface VideoData {
   id: string;
   name: string;
+  url: string;
   likes: string;
   viewCount: string;
   thumbnail: Thumbnail;
-  addDate?: Date;
-  url: string;
+  addDate: string;
+  favourite: boolean;
 }
 
 interface Thumbnail {

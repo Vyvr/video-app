@@ -36,6 +36,8 @@ export const getVimeoData = async (videoId: string): Promise<VideoData | null> =
           likes: res.metadata.connections.likes.total.toString(),
           viewCount: res.stats.plays.toString(),
           url: res.link,
+          addDate: new Date(Date.now()).toLocaleDateString(),
+          favourite: false,
           thumbnail: {
             url: res.pictures.sizes[2].link,
             width: res.pictures.sizes[2].width,

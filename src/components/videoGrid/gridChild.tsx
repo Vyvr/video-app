@@ -11,9 +11,18 @@ interface GridChildProps {
   viewCount: string;
   likeCount: string;
   addDate: string;
+  changeFavourite: (id: string) => void;
+  deleteVideo: (id: string) => void;
 }
 
 const GridChild: FC<GridChildProps> = (props) => {
+  const handleFavouriteChange = () => {
+    props.changeFavourite(props.thumbnailId);
+  }
+
+  const handleDeleteVideo = () => {
+    props.deleteVideo(props.thumbnailId);
+  }
   return (
     <div id="children-container">
       <img
@@ -45,6 +54,7 @@ const GridChild: FC<GridChildProps> = (props) => {
           <Button
             id="action-button"
             color={props.favourite ? 'danger' : 'secondary'}
+            onClick={handleFavouriteChange}
           >
             <i
               className={
@@ -52,7 +62,7 @@ const GridChild: FC<GridChildProps> = (props) => {
               }
             />
           </Button>
-          <Button id="action-button" color="dark">
+          <Button id="action-button" color="dark" onClick={handleDeleteVideo}>
             <i className="bi bi-trash-fill" />
           </Button>
         </div>

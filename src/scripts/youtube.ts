@@ -25,6 +25,8 @@ export const getYoutubeData = async (videoId: string): Promise<VideoData | null>
           likes: res.items[0].statistics.likeCount.toString(),
           viewCount: res.items[0].statistics.viewCount,
           url: `www.youtube.com/watch?v=${res.items[0].id}`,
+          addDate: new Date(Date.now()).toLocaleDateString(),
+          favourite: false,
           thumbnail: {
             url: res.items[0].snippet.thumbnails.medium.url,
             width: res.items[0].snippet.thumbnails.medium.width,
